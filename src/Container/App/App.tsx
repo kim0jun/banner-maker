@@ -3,33 +3,44 @@ declare global {
 }
 
 import * as React from 'react';
-
-// electron
-const { shell } = window.require('electron');
+import Header from '../../Component/Header';
+import InputCard from '../../Component/InputCard';
+import MakingCard from '../../Component/MakingCard';
 
 // style
 import './App.css';
 
-// image
-import logo from './../../Image/logo.svg';
+interface AppState {
+  dirPath?: string;
+}
 
-class App extends React.Component {
+class App extends React.Component<any, AppState> {
 
-  public beep = () => {
-    shell.beep();
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      dirPath: '/Users/jun/Downloads/sequence_0731'
+    };
+  }
+
+  public changeDirectory = (path: string) => {
+    this.setState(() => ({
+      dirPath: path
+    }));
   }
 
   public render() {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to React</h1>
-        </header>
-        <p className='App-intro'>
-          To get started, edit <code>src/App.tsx</code> and save to
-          <button onClick={this.beep}>beep</button>
-        </p>
+      <div className="App">
+        <Header/>
+        <section className="App-body">
+          <InputCard changeDirectory={this.changeDirectory} />
+          {
+            this.state.dirPath ? 
+              <MakingCard sqDirPath={this.state.dirPath} /> :
+              undefined
+          }
+        </section>
       </div>
     );
   }

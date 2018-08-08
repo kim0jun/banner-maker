@@ -1,0 +1,11 @@
+.squence-player{
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.squecne-img{
+  position: absolute;
+  left: 0;
+  top: 0; 
+}
