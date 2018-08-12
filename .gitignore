@@ -9,6 +9,7 @@
 # production
 /build
 /temp
+/banner-maker-darwin-x64
 
 # misc
 .DS_Store

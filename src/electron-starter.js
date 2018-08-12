@@ -7,13 +7,16 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+const isDevMode = process.env.ELECTRON_START_URL ? true : false;
+
 function createWindow() {
   
-  let config = !process.env.ELECTRON_START_URL ?  {width: 429, height: 800, resizable: false, webPreferences:{
+  let config = isDevMode ?  
+    {width: 700, height: 800, webPreferences:{
       nodeIntegrationInWorker: true,
       webSecurity:false
     }}:
-    {width: 700, height: 800, webPreferences:{
+    {width: 429, height: 800, resizable: false, webPreferences:{
       nodeIntegrationInWorker: true,
       webSecurity:false
     }}
@@ -29,7 +32,7 @@ function createWindow() {
   mainWindow.loadURL(startUrl);
 
   // Open the DevTools.
-  if(process.env.ELECTRON_START_URL) mainWindow.webContents.openDevTools();
+  if(isDevMode) mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

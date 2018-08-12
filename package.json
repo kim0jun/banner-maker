@@ -12,11 +12,12 @@
   },
   "scripts": {
     "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "electron": "electron .",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron ."
+    "build": "react-scripts-ts build",
+    "build-electron": "rm -rf banner-maker-darwin-x64 && electron-packager . banner-maker",
+    "package" : "asar pack banner-maker-darwin-x64/banner-maker.app/Contents/Resources/app banner-maker-darwin-x64/banner-maker.app/Contents/Resources/app.asar"
   },
   "main": "src/electron-starter.js",
   "homepage": "./",
@@ -26,7 +27,9 @@
     "@types/node": "^10.5.7",
     "@types/react": "^16.4.7",
     "@types/react-dom": "^16.0.6",
+    "asar": "^0.14.3",
     "electron": "^2.0.5",
+    "electron-packager": "^12.1.0",
     "typescript": "^2.9.2"
   }
 }
