@@ -3,11 +3,8 @@ html, body, #root, .App{
   height: 100%;
 }
 
-.App {
-}
-
 .App-body {
-  height: calc(100% - 50px);
+  min-height: calc(100% - 50px);
   box-sizing: border-box;
   padding:  10px 30px;
   background: linear-gradient(to bottom right, #D3E2E5, #B3BBE2);

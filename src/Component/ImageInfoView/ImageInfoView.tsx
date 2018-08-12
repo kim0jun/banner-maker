@@ -31,11 +31,7 @@ export default class ImageInfoView extends React.Component<ImageInfoViewProps, a
           <TableRowColumn>{this.props.sqLength}</TableRowColumn>
         </TableRow>
         <TableRow>
-          <TableRowColumn>Mb</TableRowColumn>
-          <TableRowColumn>{Math.floor(this.props.imageSize / 1000)}Mb</TableRowColumn>
-        </TableRow>
-        <TableRow>
-          <TableRowColumn>kb</TableRowColumn>
+          <TableRowColumn>size</TableRowColumn>
           <TableRowColumn>{this.props.imageSize}kb</TableRowColumn>
         </TableRow>
       </TableBody>

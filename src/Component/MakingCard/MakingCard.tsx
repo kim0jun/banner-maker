@@ -14,8 +14,20 @@ import SequencePlayer from '../SequencePlayer';
 
 const APP_PATH = window.require('electron').remote.app.getAppPath();
 
+fs.readdir(`${APP_PATH}/temp`, (fsErr: any, files: any) => {
+  if (fsErr) throw fsErr;
+
+  for (const file of files) {
+    fs.unlink((`${APP_PATH}/temp/${file}`), (err: any) => {
+      if (err) throw err;
+    });
+  }
+});
+
 interface MakingCardProps {
   sqDirPath: string;
+  startZip: () => void;
+  completeZip: (zipData: any) => void;
 }
 
 interface MakingCardState {
@@ -113,6 +125,28 @@ class MakingCard extends React.Component<MakingCardProps, MakingCardState> {
     this.setState({zipValue: newValue });
   }
 
+  startZip = () => {
+    let {zipValue} = this.state;
+    this.props.startZip();
+    this.compImg
+        .quality(zipValue)
+        .write(`${APP_PATH}/temp/result_${zipValue}.jpg`, this.completeCompress);
+  }
+
+  completeCompress = () => {
+    let {zipValue, imageWidth, imageHeight, imageLength} = this.state;
+    fs.stat(`${APP_PATH}/temp/result_${zipValue}.jpg`, (err: any, data: any) => {
+      if (err) throw err;
+      this.props.completeZip({
+        path: `${APP_PATH}/temp/result_${zipValue}.jpg`,
+        width: imageWidth,
+        height: imageHeight,
+        size: Math.floor(data.size / 1000),
+        frameLength: imageLength
+      });
+    });
+  }
+
   render() {
     const {isBanner, imageLength, imageHeight, imageWidth, size} = this.state;
 
@@ -146,7 +180,7 @@ class MakingCard extends React.Component<MakingCardProps, MakingCardState> {
                 value={this.state.zipValue}
                 onChange={this.handleTextField}
               />
-              <RaisedButton label="⌵ 압축하기" primary={true} fullWidth={false}  />
+              <RaisedButton label="⌵ 압축하기" onClick={this.startZip} primary={true} fullWidth={false}  />
               
             </div> :
             <div className="loading">

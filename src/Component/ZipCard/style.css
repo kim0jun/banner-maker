@@ -1,0 +1,5 @@
+.zip-card{
+  position: relative;
+  padding: 0 0 50px;
+  transition: height 0.5s ease 0;
+}

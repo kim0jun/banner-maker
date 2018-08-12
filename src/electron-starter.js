@@ -8,10 +8,17 @@ const url = require('url');
 let mainWindow
 
 function createWindow() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, "webPreferences":{
-    "webSecurity":false
-  }});
+  
+  let config = !process.env.ELECTRON_START_URL ?  {width: 429, height: 800, resizable: false, webPreferences:{
+      nodeIntegrationInWorker: true,
+      webSecurity:false
+    }}:
+    {width: 700, height: 800, webPreferences:{
+      nodeIntegrationInWorker: true,
+      webSecurity:false
+    }}
+
+  mainWindow = new BrowserWindow(config);
   // and load the index.html of the app.
   const startUrl = process.env.ELECTRON_START_URL || url.format({
       pathname: path.join(__dirname, '/../build/index.html'),
@@ -22,7 +29,7 @@ function createWindow() {
   mainWindow.loadURL(startUrl);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if(process.env.ELECTRON_START_URL) mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

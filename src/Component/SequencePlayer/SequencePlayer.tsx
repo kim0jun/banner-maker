@@ -14,6 +14,7 @@ export interface SequencePlayerState {
 }
 
 export default class SequencePlayer extends React.Component<SequencePlayerProps, any> {
+  isPlaying: boolean = false;
 
   constructor(props: SequencePlayerProps) {
     super(props);
@@ -32,7 +33,8 @@ export default class SequencePlayer extends React.Component<SequencePlayerProps,
       idx: 0
     }));
 
-    setTimeout( this.updateFrame, 50);
+    if (!this.isPlaying) setTimeout( this.updateFrame, 50);
+    this.isPlaying = true;
   }
 
   private updateFrame = () => {
